@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>My Watchlist</h2>
+
+{% for listing in listings %}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px;">
+
+        <h3>
+            <a href="{% url 'listing' listing.id %}">
+                {{ listing.title }}
+            </a>
+        </h3>
+
+        {% if listing.image_url %}
+            <img src="{{ listing.image_url }}" width="250">
+        {% endif %}
+
+        {% if listing.bids.all %}
+            <p><strong>Current Price:</strong> ₹{{ listing.bids.last.amount }}</p>
+        {% else %}
+            <p><strong>Starting Bid:</strong> ₹{{ listing.starting_bid }}</p>
+        {% endif %}
+
+    </div>
+{% empty %}
+    <p>Your Watchlist is empty.</p>
+{% endfor %}
+{% endblock %}
